@@ -1,0 +1,258 @@
+html{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+    /*background-image: url("/images/subtle_white_mini_waves.png");*/
+    /*background-image: url("/images/greyzz.png");*/
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+    /*overflow: auto;*/
+}
+
+
+body{
+    margin: 0;
+    position: relative;
+    min-height: 100%;
+    padding-bottom: 50px;
+    /*background: #e6e6e6;*/
+
+}
+
+#header{
+    /*height: 230px;*/
+    background: white;
+    padding-top: 1em;
+    /*border-bottom-style: solid;*/
+}
+
+#headerBox{
+    width: 600px;
+    border-style: solid;
+    margin: 2em auto 0 auto;
+
+
+}
+
+#wrapper{
+    width: 80%;
+    height: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    background: white;
+
+}
+
+hr{
+    margin: 0;
+}
+
+#header img{
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#quote{
+    position: relative;
+    display: block;
+
+}
+
+#quotes{
+    display: flex;
+    justify-content: center;
+    margin: 2em;
+
+}
+
+.quoteContainer{                /*created by view*/
+    /*border-style: solid;*/
+    border-width: 2px;
+    padding: 2em;
+    max-width: 25em;
+}
+
+/*.fb-share-button{*/
+    /*margin-top: 2em;*/
+/*}*/
+/*.twitter-share-button{*/
+    /*margin-top: 2em;*/
+/*}*/
+
+#socialMediaList li{
+    display: block;
+    float: left;
+
+}
+
+
+
+
+#date{
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+#leftAd{
+    display: none;
+    float: left;
+    width:200px;
+    height: 400px;
+    /*background: red;*/
+
+}
+
+#rightAd{
+    display: none;
+    float: right;
+    width:200px;
+    height: 400px;
+    background: red;
+}
+
+#lowerAd{
+    display: none;
+    position: relative;
+    width: 728px;
+    height: 90px;
+    margin-right: auto;
+    margin-left:auto;
+    background: grey;
+}
+
+#preFooter{
+    position: relative;
+    display: block;
+    width:100%;
+    height: 20px;
+    clear: both;
+}
+
+#footer{
+    position: absolute;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    background-color: black;
+    color: white;
+    opacity: .75;
+
+}
+
+.footerLeft{
+    position: absolute;
+    left:20px;
+    top: 50%;
+    transform: translate(0, -50%)
+
+}
+
+.footerRight{
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translate(0, -50%)
+}
+
+a{
+    text-decoration: none;
+    margin: 0 2em 0 2em;
+}
+/* unvisited link */
+a:link {
+    color: white;
+}
+/* visited link */
+a:visited {
+    color: white;
+}
+/* mouse over link */
+a:hover {
+    color: grey;
+}
+/* selected link */
+a:active {
+    color: white;
+}
+
+h2{
+    font-size: 18px;
+    font-weight: normal;
+}
+/****************** About ******************/
+#about{
+    margin-top: 4em;
+}
+#about img{
+    float: left;
+    margin-right: 2em;
+    width: 40%;
+}
+
+/****************** Books ******************/
+#wrapper.books{
+    margin-top: 5em;
+}
+
+#wrapper.books h1{
+    text-align: center;
+}
+
+#content{
+    float: left;
+    width: 70%;
+}
+
+.category{
+    border-bottom-style: solid;
+    font-size: 24px;
+}
+
+.books{
+    margin-top: 2em;
+    margin-bottom: 2em;
+    overflow: auto;
+
+
+}
+
+.booksLeft{
+    float: left;
+    width: 50%;
+}
+
+.booksLeft img{
+    /*margin-top: 2em;*/
+}
+.booksLeft a{
+    margin: 0;
+}
+.booksRight{
+    float:right;
+    width: 50%;
+    /*padding-top: 2em;*/
+
+}
+
+#rightAdBooks{
+    /*display: none;*/
+    float: right;
+    width:200px;
+    height: 400px;
+}
+#rightAdBooks img{
+    clear: right;
+    max-width: 200px;
+    margin-top: 3em;
+
+}

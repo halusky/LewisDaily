@@ -1,0 +1,42 @@
+//
+   Created by matthewyun on 3/14/16.
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/stylesheet.css')
+    body
+        script(id = 'fb-root').
+            (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'))
+
+
+        block content
+        #footer
+            .footerLeft
+                a(href = '/' id = 'linkHome') Home
+                a(href = '/about' id = 'linkAbout') About
+                a(href = '/pastquotes' id = 'linkPastQuotes') Past Quotes
+                a(href = '/books' id = 'linkBooks') Books
+
+            .footerRight C.S. Lewis Daily 2016
+
+        script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+        script(src = 'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
+        script(src = '/javascripts/libraries/underscore-min.js')
+        script(src = '/javascripts/libraries/backbone-min.js')
+        script(src = '/javascripts/libraries/backbone.localStorage.js')
+        script(src = '/javascripts/libraries/jquery-dateFormat-1.0.js')
+        script(src = '/javascripts/libraries/jquery-ui-1.10.0.custom.js')
+        script(src = '/javascripts/models/quotesModel.js')
+        script(src = '/javascripts/collections/quotesCollection.js')
+        script(src = '/javascripts/views/addQuoteView.js')
+        script(src = '/javascripts/views/mainView.js')
+        script(src = '/javascripts/views/quotesView.js')
+        script(src = '/javascripts/appAddQuote.js')
+        script(src = '/javascripts/app.js')

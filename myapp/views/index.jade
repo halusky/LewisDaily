@@ -1,0 +1,42 @@
+//
+   Created by matthewyun on 3/14/16.
+
+extends layout
+block content
+
+    #header
+        #headerBox
+            a(href = '/' id = 'linkHome')
+                img(src = '/images/CSLewisLogo.png')
+
+    #wrapper
+
+        #leftAd
+            h3 Sponsored Links
+
+        #quote
+            //quotes
+            script(id = "quoteTemplate" type = "text/template").
+                <div id = "date">  <%= Date %> </div>
+                <div id = "passage">  "<%= Passage %>" </div>
+                </br>
+                <div id = "reference"> – <%= Author %>: <%= Book %>, Chapter <%= Chapter%> </div>
+
+                <ul id = 'socialMediaList'>
+                    <li>
+                        <div class="fb-share-button" data-href="https://cslewisdaily.org" data-layout="button"></div>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                    </li>
+                </ul>
+        #rightAd
+            h3 Sponsored Links
+
+        #quotes
+
+        #lowerAd
+
+
+        #preFooter

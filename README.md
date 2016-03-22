@@ -15,4 +15,8 @@ Auto displays a new quote daily
 * App looks at repo and selects an unused quote and moves it over to the current DB. This quote is tagged as 'used' in repo and as 'current' in current DB. 
 * App knows to display new quote by looking for quote tagged 'current'
 
+###Stack
+Backbone, Mongo, Mongoose, Node, Express, Jade
+
+
 csLewisDaily.org

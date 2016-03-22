@@ -3,7 +3,7 @@
  */
 
 var app = app || {};
-
+"use strict";
 
 app.addQuoteView = Backbone.View.extend({
     el:$('#addQuote'),
@@ -16,15 +16,14 @@ app.addQuoteView = Backbone.View.extend({
 
 
     events:{
-//        'click #btnAddQuote': 'addQuote'
-        'click button': 'addQuote'
+        'click #btnAddQuote': 'addQuote'
     },
 
 
     addQuote: function(e){
         e.preventDefault();
 
-        console.log('addQuote triggered');
+        console.log('addQuote running');
 
         // *** INPUT VERIFICATION
         // check for empty fields. Populate with red error message
@@ -38,17 +37,15 @@ app.addQuoteView = Backbone.View.extend({
             }
         });
 
-        console.log('errors equals ' + errors);
+//        check for question w/ same number
+        var numberInput = $('#Number').val();
 
-        // check for question w/ same number
-//        var numberInput = $('#Number').val();
-//
-//        if (this.collection.find(function(model){
-//            return model.get('Number') == numberInput;
-//        }, this)){
-//            errors ++;
-//            alert('Number value already used.');
-//        }
+        if (this.collection.find(function(model){
+            return model.get('Number') == numberInput;
+        }, this)){
+            errors ++;
+            alert('Number value already used.');
+        }
 
         // If no errors, use input data to create new collection
         if (errors === 0) {
@@ -56,8 +53,20 @@ app.addQuoteView = Backbone.View.extend({
             $('#addQuote fieldset').children('input').each(function (i, el) {
                 newQuote[el.id] = $(el).val();
             });
-            console.log(newQuote);
-            this.collection.create(newQuote);
+
+            $.post('/api/quotesRepo',
+                {
+                    Book: newQuote.Book,
+                    Chapter: newQuote.Chapter,
+                    Passage: newQuote.Passage,
+                    Number: newQuote.Number,
+                    Author: newQuote.Author,
+                    Title: newQuote.Title,
+                    Keywords: newQuote.Keywords
+                },
+                function(data, status){
+                    alert("Data: " + data + "\nStatus: " + status);
+                });
 
 
         }

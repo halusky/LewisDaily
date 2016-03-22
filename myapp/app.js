@@ -1,6 +1,10 @@
 /**
  * Created by matthewyun on 3/14/16.
  */
+
+(function(){
+"use strict";
+
 // Module dependencies.
 var application_root = __dirname,
     express = require( 'express' ), //Web framework
@@ -10,27 +14,12 @@ var application_root = __dirname,
     methodOverride = require('method-override'),
     CronJob = require('cron').CronJob; //Allows time-based execution
 
-
-//new CronJob('* * * * * *', function() {
-//    console.log('You will see this message every second');
-//}, null, true, 'America/Los_Angeles');
-
-
-
 // Define route variables
 var routes = require('./routes/index');
 var addQuoteRoute = require('./routes/addQuoteRoute');
 var booksRoute= require('./routes/booksRoute');
 var aboutRoute= require('./routes/aboutRoute');
 var pastQuotesRoute= require('./routes/pastQuotesRoute');
-
-var moduleTest = require('./modules/moveQuote');
-
-
-new CronJob('* * * * * *', moduleTest
-    , null, true, 'America/Los_Angeles');
-
-
 
 //Create server
 var app = express();
@@ -75,11 +64,70 @@ var Quote = new mongoose.Schema({ // for current quotes
 });
 
 //Models
-var quoteModel = mongoose.model( 'quoteModel', Quote);
 var quoteRepoModel = mongoose.model( 'quoteRepoModel', QuoteRepo);
+var quoteModel = mongoose.model( 'quoteModel', Quote);
 
 
-// Configure server
+//**************************  Daily Job **************************//
+var dailyQuoteUntag = quoteModel.findOneAndUpdate(
+    {Current: true},
+    {Current: false}
+);
+
+var dailyQuoteMove = function(){
+    quoteRepoModel.findOneAndUpdate( //mark current quote as Used
+        {Used: false},
+        {Used: true},
+        function (err, quote) {
+            dailyQuoteUntag.exec(function(err, quote){
+                console.log('untagged');
+            });
+
+            var newQuote = new quoteModel({
+                Book: quote.Book,
+                Chapter: quote.Chapter,
+                Passage: quote.Passage,
+                Number: quote.Number,
+                Author: quote.Author,
+                Title: quote.Title,
+                Current: 1,
+//        Current: quote.Current,
+//        Date: quote.Date,
+                Keywords: quote.Keywords
+            });
+
+            //throw error if newQuote empty
+            if(newQuote === null){
+                throw new Error('newQuote is null');
+            }
+
+            newQuote.save( function( err ) { //add new quote
+                if( !err ) {
+                    return console.log( 'created' );
+                } else {
+                    return console.log( err );
+                }
+            });
+        }
+    );
+};
+
+//    dailyQuoteMove();
+
+
+new CronJob('00 59 23 * * *', dailyQuoteMove
+    , null, true, 'America/New_York');
+
+//try {
+//    new CronJob('10 * * * * *', dailyQuoteMove
+//        , null, true, 'America/Los_Angeles');
+//} catch (error) {
+//    console.log("Something went wrong: " + error);
+//}
+
+//console.log(currentPassage);
+
+//**************************  Configure Server **************************//
 
 //parses request body and populates request.body
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -88,7 +136,20 @@ app.use(bodyParser.json());
 //checks request.body for HTTP method overrides
 app.use(methodOverride());
 
-app.use('/', routes);
+// this is to populate the meta for data FB data scraping
+app.get('/', function(req, res) {
+    quoteModel.findOne(
+        {Current: true}, 'Passage', function (err, passage) {
+            //handle error
+            if (err) throw err;
+            else {
+                res.render('index', {description: passage.Passage})
+            }
+        }
+    );
+});
+
+//app.use('/', routes);
 app.use('/addQuote', addQuoteRoute);
 app.use('/books', booksRoute);
 app.use('/about', aboutRoute);
@@ -131,17 +192,18 @@ app.get( '/api/quotes/:id', function( request, response ) {
 });
 
 //Insert a new quote
-app.post( '/api/quotes', function( request, response ) {
+app.post( '/api/quotesRepo', function( request, response ) {
 
     console.log('POSTING');
 
-    var quote = new quoteModel({
+    var quote = new quoteRepoModel({
         Book: request.body.Book,
         Chapter: request.body.Chapter,
         Passage: request.body.Passage,
         Number: request.body.Number,
         Author: request.body.Author,
         Title: request.body.Title,
+        Used: 0,
 //        Current: request.body.Current,
 //        Date: request.body.Date,
         Keywords: request.body.Keywords
@@ -157,9 +219,9 @@ app.post( '/api/quotes', function( request, response ) {
 });
 
 //Update a quote
-app.put( '/api/quotes/:id', function( request, response ) {
+app.put( '/api/quotesRepo/:id', function( request, response ) {
     console.log( 'Updating quote ' + request.body.title );
-    return quoteModel.findById( request.params.id, function( err, quote ) {
+    return quoteRepoModel.findById( request.params.id, function( err, quote ) {
         quote.Book = request.body.Book;
         quote.Chapter = request.body.Chapter;
         quote.Passage = request.body.Passage;
@@ -184,7 +246,7 @@ app.put( '/api/quotes/:id', function( request, response ) {
 //Delete a book
 app.delete( '/api/quote/:id', function( request, response ) {
     console.log( 'Deleting book with id: ' + request.params.id );
-    return quoteModel.findById( request.params.id, function( err, passage ) {
+    return quoteRepoModel.findById( request.params.id, function( err, passage ) {
         return passage.remove( function( err ) {
             if( !err ) {
                 console.log( 'Quote removed' );
@@ -201,3 +263,5 @@ var port = 3000;
 app.listen( port, function() {
     console.log( 'Express server listening on port %d in %s mode', port, app.settings.env );
 });
+
+})();

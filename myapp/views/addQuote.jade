@@ -1,9 +1,8 @@
 //
    Created by matthewyun on 3/14/16.
-extends layout
+extends layoutAddQuote
 block content
     #addQuote
-        h2 Add Quote
         fieldset
             input#Book(type='text', placeholder='Book')
             br
@@ -15,8 +14,11 @@ block content
             br
             input#Author(type='text', placeholder='Author')
             br
+            input#Title(type='text', placeholder='Title')
+            br
             input#Keywords(type='text', placeholder='Keywords')
             br
             button#btnAddQuote Add Question
 
 
+        h2 Add Quote

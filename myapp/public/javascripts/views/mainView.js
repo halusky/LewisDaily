@@ -30,13 +30,13 @@ app.mainView = Backbone.View.extend({
     },
 
 
-    render: function(nextPassage) {
+    render: function() {
         //Delete previous question
         this.$el.empty();
 
         //determine next question number
         var passage = this.collection.find(function(model) {
-                return model.get('Number') === 7; }
+                return model.get('Current') === true; }
             , this);
 
         passage.attributes.Date = this.getDate();
@@ -55,6 +55,10 @@ app.mainView = Backbone.View.extend({
 
 
         this.$el.append(quoteView.render().el);
+
+        //kickoff renderMeta
+//        this.renderMeta();
+
     },
 
     getDate: function() {
@@ -67,7 +71,6 @@ app.mainView = Backbone.View.extend({
 
         return currentDate;
 
-        //19/05/2011
     }
 
 });

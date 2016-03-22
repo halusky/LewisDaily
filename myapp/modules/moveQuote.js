@@ -3,12 +3,9 @@
  */
 
 
-var that = function(){
-    console.log('module test!!!!');
-};
-
-//Connect to database
-mongoose.connect( 'mongodb://localhost/lewisDB' );
+//var that = function(){
+//    console.log('module test!!!!');
+//};
 
 
 //Find last item in DB A and mark 'Current' field as False and populate Date
@@ -18,35 +15,54 @@ mongoose.connect( 'mongodb://localhost/lewisDB' );
 //
 //
 
-var QuoteRepo = new mongoose.Schema({
-    Book: String,
-    Chapter: String,
-    Passage: String,
-    Number: Number,
-    Author: String,
-    Title: String,
-    Used: Boolean,
-    Keywords: Array
-//    Keywords: [ Keywords ]
-});
+//var test = quoteModel.findAndModify({
+//    Used: True
+//
+//});
+//
+//console.log('test is ' + test);
+
+
 
 //Models
-var quoteRepoModel = mongoose.model( 'quoteRepoModel', QuoteRepo);
+//var quoteRepoModel = mongoose.model( 'quoteRepoModel', QuoteRepo);
 
 
-app.get( '/api/quotes/:id', function( request, response ) {
-    return quoteModel.findById( request.params.id, function( err, passage ) {
-        if( !err ) {
-            return response.send( passage );
-        } else {
-            return console.log( err );
-        }
-    });
-});
+//var mongoose = require( 'mongoose');
+//
+//mongoose.connect( 'mongodb://localhost/lewisDB' );
+//
+//
+//var QuoteRepo = new mongoose.Schema({ //for all quotes
+//    Book: String,
+//    Chapter: String,
+//    Passage: String,
+//    Number: Number,
+//    Author: String,
+//    Title: String,
+//    Used: Boolean,
+//    Keywords: Array
+////    Keywords: [ Keywords ]
+//});
+//
+//var quoteRepoModel = mongoose.model( 'quoteRepoModel', QuoteRepo);
+//
+//
+//
+//
+that = {
+    test: function () {
+        quoteRepoModel.findAndModify({
+            query: {Used: 0},
+            udpate: {Used: 1}
 
-
-
-
+        });
+    }
+};
+//
+//var that = function(){
+//    console.log('module test')
+//};
 
 
 module.exports = that;

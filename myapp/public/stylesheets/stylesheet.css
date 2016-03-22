@@ -90,6 +90,7 @@ hr{
 #socialMediaList li{
     display: block;
     float: left;
+    margin-right: 1em;
 
 }
 

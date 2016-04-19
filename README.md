@@ -19,4 +19,3 @@ Auto displays a new quote daily
 Backbone, Mongo, Mongoose, Node, Express, Jade
 
 
-csLewisDaily.org

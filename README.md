@@ -2,7 +2,7 @@
 
 
 ##Description
-Auto displays a new quote daily 
+Automatically selects and displays a new daily quote from the database.
 
 ##Brief overview
 
